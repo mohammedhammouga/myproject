@@ -72,7 +72,7 @@ Route::get('/profile/{id}', [SearchController::class, 'profile'])->name('profile
 
 
 
-/* <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 //TodoAdmin
@@ -102,4 +102,3 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 >>>>>>> ec09cf88b0171f7270b5c546365c6f12e7ae33e0
 
 
- */
