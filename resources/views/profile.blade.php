@@ -7,6 +7,8 @@
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -157,6 +159,7 @@
       border-radius: 5px;
       cursor: pointer;
       transition: background-color 0.3s;
+      width: 100%;
     }
 
     .time-slot:hover {
@@ -184,13 +187,41 @@
       float: right;
       margin-top: 10px;
     }
+
     .user-special {
-  background-color: blue;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
-  display: inline-block;
-}
+      background-color: blue;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+    
+    .booking-form {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    .booking-form input, .booking-form textarea {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    
+    .booking-form button {
+      background-color: #49b5d3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .booking-form button:hover {
+      background-color: #399dc0;
+    }
 
   </style>
 </head>
@@ -201,13 +232,15 @@
 
   <div class="container">
     <div class="user-profile">
-      <div class="user-info">
-        <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }}">
-        <div>
-          <h2>{{ $user->name }}</h2>
-          <p class="user-special">{{ $user->special }}</p>
-        </div>
-      </div>
+      <div class="container">
+        <div class="user-profile">
+          <div class="user-info">
+            <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->name }}">
+            <div>
+              <h2>{{ $user->name }}</h2>
+              <p class="user-special">{{ $user->special }}</p>
+            </div>
+          </div>
       
       <hr class="my-4">
 
@@ -229,14 +262,14 @@
             <li class="user-special">{{ $user->special }}</li>
           </ul>
         </div>
-      </div>
+      </div>    
+      </div>      
 
       <hr class="my-4">
 
       <div class="schedule-container">
-        <div class="schedule-header">
-          <img src="calendar-icon.png" alt="Calendar Icon" width="30">
-          <h2>Prendre Rendez-vous en ligne</h2>
+        <div class="schedule-header">  
+          <h2><i class="bi bi-calendar"></i> Prendre Rendez-vous en ligne</h2>
         </div>
         <table class="schedule">
           <thead>
@@ -247,91 +280,105 @@
               <th class="day-header">Jeu.<br>06/06</th>
               <th class="day-header">Ven.<br>07/06</th>
               <th class="day-header">Sam.<br>08/06</th>
-              <th class="right-arrow">></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="time-slot">14:30</td>
-              <td class="time-slot">09:00</td>
-              <td class="time-slot">09:00</td>
-              <td class="time-slot">09:00</td>
-              <td class="time-slot">09:00</td>
-              <td class="time-slot">09:00</td>
-              <td></td>
+              <td><button class="time-slot" data-time="14:30">14:30</button></td>
+              <td><button class="time-slot" data-time="09:00">09:00</button></td>
+              <td><button class="time-slot" data-time="09:00">09:00</button></td>
+              <td><button class="time-slot" data-time="09:00">09:00</button></td>
+              <td><button class="time-slot" data-time="09:00">09:00</button></td>
+              <td><button class="time-slot" data-time="09:00">09:00</button></td>
             </tr>
             <tr>
-              <td class="time-slot">15:00</td>
-              <td class="time-slot">09:30</td>
-              <td class="time-slot">09:30</td>
-              <td class="time-slot">09:30</td>
-              <td class="time-slot">09:30</td>
-              <td class="time-slot">09:30</td>
-              <td></td>
+              <td><button class="time-slot" data-time="15:00">15:00</button></td>
+              <td><button class="time-slot" data-time="09:30">09:30</button></td>
+              <td><button class="time-slot" data-time="09:30">09:30</button></td>
+              <td><button class="time-slot" data-time="09:30">09:30</button></td>
+              <td><button class="time-slot" data-time="09:30">09:30</button></td>
+              <td><button class="time-slot" data-time="09:30">09:30</button></td>
             </tr>
             <tr>
-              <td class="time-slot">15:30</td>
-              <td class="time-slot">10:00</td>
-              <td class="time-slot">10:00</td>
-              <td class="time-slot">10:00</td>
-              <td class="time-slot">10:00</td>
-              <td class="time-slot">10:00</td>
-              <td></td>
+              <td><button class="time-slot" data-time="15:30">15:30</button></td>
+              <td><button class="time-slot" data-time="10:00">10:00</button></td>
+              <td><button class="time-slot" data-time="10:00">10:00</button></td>
+              <td><button class="time-slot" data-time="10:00">10:00</button></td>
+              <td><button class="time-slot" data-time="10:00">10:00</button></td>
+              <td><button class="time-slot" data-time="10:00">10:00</button></td>
             </tr>
             <tr>
-              <td class="time-slot">16:00</td>
-              <td class="time-slot">10:30</td>
-              <td class="time-slot">10:30</td>
-              <td class="time-slot">10:30</td>
-              <td class="time-slot">10:30</td>
-              <td class="time-slot">10:30</td>
-              <td></td>
+              <td><button class="time-slot" data-time="16:00">16:00</button></td>
+              <td><button class="time-slot" data-time="10:30">10:30</button></td>
+              <td><button class="time-slot" data-time="10:30">10:30</button></td>
+              <td><button class="time-slot" data-time="10:30">10:30</button></td>
+              <td><button class="time-slot" data-time="10:30">10:30</button></td>
+              <td><button class="time-slot" data-time="10:30">10:30</button></td>
             </tr>
             <tr>
-              <td class="time-slot">16:30</td>
-              <td class="time-slot">11:00</td>
-              <td class="time-slot">11:00</td>
-              <td class="time-slot">11:00</td>
-              <td class="time-slot">11:00</td>
-              <td class="time-slot">11:00</td>
-              <td></td>
+              <td><button class="time-slot" data-time="16:30">16:30</button></td>
+              <td><button class="time-slot" data-time="11:00">11:00</button></td>
+              <td><button class="time-slot" data-time="11:00">11:00</button></td>
+              <td><button class="time-slot" data-time="11:00">11:00</button></td>
+              <td><button class="time-slot" data-time="11:00">11:00</button></td>
+              <td><button class="time-slot" data-time="11:00">11:00</button></td>
             </tr>
             <tr>
-              <td class="time-slot">17:00</td>
-              <td class="time-slot">11:30</td>
-              <td class="time-slot">11:30</td>
-              <td class="time-slot">11:30</td>
-              <td class="time-slot">11:30</td>
-              <td class="time-slot">11:30</td>
-              <td></td>
+              <td><button class="time-slot" data-time="17:00">17:00</button></td>
+              <td><button class="time-slot" data-time="11:30">11:30</button></td>
+              <td><button class="time-slot" data-time="11:30">11:30</button></td>
+              <td><button class="time-slot" data-time="11:30">11:30</button></td>
+              <td><button class="time-slot" data-time="11:30">11:30</button></td>
+              <td><button class="time-slot" data-time="11:30">11:30</button></td>
             </tr>
           </tbody>
         </table>
-        <button class="schedule-button">Afficher plus d'horaires</button>
+      </div>
+
+      @if(session('success'))
+        <div class="alert alert-success">
+          {{ session('success') }}
+        </div>
+      @endif
+
+      <div class="booking-form">
+        <h3>Réservation de rendez-vous</h3>
+        <form action="{{ route('appointments.store') }}" method="POST">
+          @csrf
+          <strong><label for="name">Saisir votre nom:</label></strong><br>
+          <input type="text" name="name" placeholder="Nom" required>
+          <strong><label for="name">Saisir votre email:</label></strong><br>
+          <input type="email" name="email" placeholder="Email" required>
+          <strong><label for="name">Saisir votre phone:</label></strong><br>
+          <input type="text" name="phone" placeholder="Téléphone" required>
+          <input type="hidden" id="selected-time" name="time">
+          <p id="display-time"></p>
+          <strong><label for="name">Saisir votre maladie:</label></strong><br>
+          <textarea name="message" placeholder="Explication" required></textarea>
+          <button type="submit">Réserver</button>
+        </form>
       </div>
 
       <hr class="my-4">
-
-      <div class="geolocation">
-        <h4>Géolocalisation</h4>
-        <div id="map"></div>
-      </div>
     </div>
   </div>
 
   <script>
-    function initMap() {
-      const location = { lat: 33.928992, lng: -6.900688 };
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 15,
-        center: location,
+    document.addEventListener('DOMContentLoaded', function() {
+      const timeSlots = document.querySelectorAll('.time-slot');
+      const bookingForm = document.querySelector('.booking-form');
+      const selectedTimeInput = document.getElementById('selected-time');
+      const displayTime = document.getElementById('display-time');
+
+      timeSlots.forEach(slot => {
+        slot.addEventListener('click', function() {
+          const selectedTime = this.getAttribute('data-time');
+          selectedTimeInput.value = selectedTime;
+          displayTime.textContent = 'Heure sélectionnée: ' + selectedTime;
+          bookingForm.style.display = 'block';
+        });
       });
-      const marker = new google.maps.Marker({
-        position: location,
-        map: map,
-      });
-    }
+    });
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
 </body>
 </html>

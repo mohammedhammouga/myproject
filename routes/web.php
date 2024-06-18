@@ -5,7 +5,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UseradminController;
 use App\Http\Controllers\SearchController;
-
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +23,7 @@ Route::get('/', function () {
     return view('welcom1');
 })->name('home');
 
+// Authenticated Routes
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -30,56 +31,29 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'redirect'])->name('dashboard');
     Route::get('/profile', [HomeController::class, 'show'])->name('profile.show');
-    //TodoAdmin
+    Route::post('/profile/update-bio', [HomeController::class, 'updateBio'])->name('profile.updateBio');
+
+    // Task Routes
     Route::get('/task', [TaskController::class, 'index'])->name('task.index');
     Route::post('/task', [TaskController::class, 'store'])->name('task.store');
-    Route::delete('/task/{id}', [TaskController::class, 'destroy'])->name('task.destroy'); 
-    //bio
-    Route::post('/profile/update-bio', [HomeController::class, 'updateBio'])->name('profile.updateBio');
-    //all user in admin
+    Route::delete('/task/{id}', [TaskController::class, 'destroy'])->name('task.destroy');
+
+    // Admin User Routes
     Route::delete('/alluser/{id}', [UseradminController::class, 'destroy'])->name('alluser.destroy');
     Route::get('/alluser', [UseradminController::class, 'index'])->name('admin.alluser.index');
+});
 
-     
-    
-}); 
-
-
-
-//contact
-/* Route::get('/messages', [ContactController::class, 'index'])->name('contacts.index');
-Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
-Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
- */
+// Contact Routes
 Route::get('/messages', [ContactController::class, 'index'])->name('contacts.index');
-/* Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');  */// Ajoutez ceci si nécessaire
 Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
 Route::delete('/contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
-
+// Search Routes
 Route::get('/doctors', [SearchController::class, 'index'])->name('serch');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
-
-
 Route::get('/profile/{id}', [SearchController::class, 'profile'])->name('profile');
 
-
-
-
-
-
-
-
-
-
-<<<<<<< HEAD
-
-=======
-//TodoAdmin
-// routes/web.php
-
-
-
+// Role-Based Dashboard Routes
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::middleware('role:Admin')->group(function () {
         Route::get('/admin', function () {
@@ -99,6 +73,5 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         });
     });
 });
->>>>>>> ec09cf88b0171f7270b5c546365c6f12e7ae33e0
 
-
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
